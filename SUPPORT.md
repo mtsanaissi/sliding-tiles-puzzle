@@ -11,10 +11,8 @@ This project is published as a free package workspace. Support and monetization 
 ## Sponsorship and donations
 
 - GitHub Sponsors is the repo-level sponsorship surface configured through `.github/FUNDING.yml`.
-- Live sponsor page: [github.com/sponsors/mtsanaissi](https://github.com/sponsors/mtsanaissi)
-- Live donation page: [buymeacoffee.com/mtsanaissi](https://buymeacoffee.com/mtsanaissi)
-
-As of 2026-03-13, both links returned `200`, so they are now safe to surface publicly in docs and the demo.
+- Sponsor page: [github.com/sponsors/mtsanaissi](https://github.com/sponsors/mtsanaissi)
+- Buy me a coffee: [buymeacoffee.com/mtsanaissi](https://buymeacoffee.com/mtsanaissi)
 
 ## Custom integration path
 

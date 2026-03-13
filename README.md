@@ -156,7 +156,7 @@ Source: [`examples/vite-demo/App.tsx`](./examples/vite-demo/App.tsx)
 - Support guide: [SUPPORT.md](./SUPPORT.md)
 - Custom integration inquiries: [integration request issue form](https://github.com/mtsanaissi/sliding-tiles-puzzle/issues/new?template=integration-request.yml)
 - Sponsor the project: [github.com/sponsors/mtsanaissi](https://github.com/sponsors/mtsanaissi)
-- Donate: [buymeacoffee.com/mtsanaissi](https://buymeacoffee.com/mtsanaissi)
+- Buy me a coffee: [buymeacoffee.com/mtsanaissi](https://buymeacoffee.com/mtsanaissi)
 
 ## Status
 
