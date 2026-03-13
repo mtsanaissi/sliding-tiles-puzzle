@@ -43,6 +43,6 @@
     "clean": "rm -rf dist",
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "pnpm run build && node --test test/**/*.test.mjs"
+    "test": "pnpm run build && node --test test/*.test.mjs"
   }
 }
