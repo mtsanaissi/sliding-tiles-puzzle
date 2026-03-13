@@ -1,0 +1,5 @@
+{
+  "name": "Sliding Tile UI Puzzle",
+  "description": "A sliding puzzle where the interface itself is reconstructed from live UI fragments, turning designed screens into playable levels.",
+  "requestFramePermissions": []
+}

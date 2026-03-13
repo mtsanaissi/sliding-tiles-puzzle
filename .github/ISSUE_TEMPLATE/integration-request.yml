@@ -1,0 +1,42 @@
+name: Custom integration request
+description: Request implementation help, a bespoke puzzle integration, or white-label collaboration.
+title: "[Integration]: "
+labels:
+  - custom-integration
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for implementation help, branded puzzle experiences, or package integration work that goes beyond bug reports.
+  - type: input
+    id: company
+    attributes:
+      label: Team or company
+      description: Who is requesting the integration?
+      placeholder: Acme Inc.
+    validations:
+      required: true
+  - type: textarea
+    id: project-goal
+    attributes:
+      label: Project goal
+      description: What are you trying to ship with the sliding puzzle packages?
+      placeholder: We want to embed a branded 4x4 puzzle in a product launch page.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope and constraints
+      description: Include framework, timeline, accessibility needs, analytics, persistence, or any delivery constraints.
+      placeholder: React 19, launch in six weeks, needs keyboard support and event tracking.
+    validations:
+      required: true
+  - type: textarea
+    id: contact
+    attributes:
+      label: Contact details
+      description: Share the best way to follow up.
+      placeholder: Email, GitHub handle, or another preferred contact method.
+    validations:
+      required: true

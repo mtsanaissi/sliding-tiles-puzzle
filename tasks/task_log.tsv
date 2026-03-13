@@ -1,0 +1,34 @@
+ts	id	action	actor	note
+2026-03-11T13:32:31Z	T-001	create	codex	Initialized task ledger entry from npm package preparation backlog.
+2026-03-11T13:32:31Z	T-002	create	codex	Initialized task ledger entry from npm package preparation backlog.
+2026-03-11T13:32:31Z	T-003	create	codex	Initialized task ledger entry from npm package preparation backlog.
+2026-03-11T13:32:31Z	T-004	create	codex	Initialized task ledger entry from npm package preparation backlog.
+2026-03-11T13:32:31Z	T-005	create	codex	Initialized task ledger entry from npm package preparation backlog.
+2026-03-11T13:32:31Z	T-006	create	codex	Initialized task ledger entry from npm package preparation backlog.
+2026-03-11T13:32:31Z	T-007	create	codex	Initialized task ledger entry from npm package preparation backlog.
+2026-03-11T13:32:31Z	T-008	create	codex	Initialized task ledger entry from npm package preparation backlog.
+2026-03-11T13:32:31Z	T-009	create	codex	Initialized task ledger entry from npm package preparation backlog.
+2026-03-11T13:32:31Z	T-010	create	codex	Initialized task ledger entry from npm package preparation backlog.
+2026-03-11T13:32:31Z	T-011	create	codex	Initialized task ledger entry from npm package preparation backlog.
+2026-03-11T13:32:31Z	T-012	create	codex	Initialized task ledger entry from npm package preparation backlog.
+2026-03-11T13:35:28Z	T-001	start	codex	Started package product scope definition and recorded the v1 package boundaries.
+2026-03-11T13:35:28Z	T-001	complete	codex	Documented the v1 package promise, naming direction, intended users, non-goals, and initial monetization surfaces.
+2026-03-11T13:53:32Z	T-002	start	codex	Started workspace conversion to split the repo into package and example app areas.
+2026-03-11T13:55:57Z	T-002	complete	codex	Created the pnpm workspace layout, moved the current app into examples/vite-demo, and added scaffold package manifests for core and react.
+2026-03-11T14:25:26Z	T-003	start	codex	Started extracting board state and move logic into the framework-agnostic core package.
+2026-03-11T14:26:45Z	T-003	complete	codex	Implemented the core board API, documented the exported surface, and rewired the demo app to use the extracted puzzle logic.
+2026-03-11T14:37:42Z	T-004	start	codex	Started defining the React package API around a hook and minimal board components.
+2026-03-11T14:39:27Z	T-004	complete	codex	Implemented the initial React API surface, documented the design decisions, and added manifest entries for the missing React type packages needed for full typecheck validation.
+2026-03-11T14:40:37Z	T-005	start	codex	Started generalizing board rendering and styling so the React package is not tied to the demo layout assumptions.
+2026-03-11T14:41:41Z	T-005	complete	codex	Extracted layout utilities, expanded styling hooks, switched interactive tiles to buttons, and documented the package-owned rendering model.
+2026-03-11T15:05:33Z	T-006	complete	codex	Rebuilt the demo app as a consumer of the workspace packages and added UI, image, and custom-control examples.
+2026-03-11T16:31:30Z	T-007	start	codex	Started adding an executable workspace test harness with real core coverage and a React-package smoke layer.
+2026-03-11T16:31:30Z	T-007	update	codex	Added core engine tests and executable React smoke tests, with deeper mounted interaction coverage still pending a richer React test environment.
+2026-03-11T17:27:35Z	T-008	complete	codex	Hardened package metadata and tsconfig settings, verified emitted declarations, and documented the ESM-only packaging model plus the temporary React type shim.
+2026-03-12T12:39:25Z	T-007	complete	codex	Replaced the React smoke workaround with local jsdom-based mounted interaction tests and verified both package test commands pass.
+2026-03-12T14:47:18Z	T-009	start	codex	Started rewriting the package documentation around installation, package APIs, customization, limitations, examples, and support guidance.
+2026-03-12T14:50:07Z	T-009	complete	codex	Rewrote the root and package READMEs around package consumption, quickstarts, API guidance, limitations, visual examples, and support links; runtime verification was blocked because node and pnpm are unavailable in PATH.
+2026-03-12T14:54:17Z	T-010	start	codex	Started adding release engineering basics including licensing, CI, publish automation, versioning documentation, and a release checklist.
+2026-03-12T14:55:31Z	T-010	complete	codex	Added MIT licensing, changelog and release-engineering docs, GitHub Actions CI and publish workflows with trusted-publishing-ready permissions, and recorded that both planned npm package names returned 404 from the registry on 2026-03-12; local runtime verification remained blocked because node and pnpm are unavailable in PATH.
+2026-03-12T20:31:08Z	T-011	start	codex	Started adding support and monetization surfaces across the repo docs, issue templates, funding config, and demo app.
+2026-03-12T20:32:15Z	T-011	complete	codex	Added a support guide, repo funding config, custom integration issue form, support links in the README/package docs/demo, and named future paid service layers; verified build, typecheck, and test all pass. GitHub Sponsors still redirects to the base profile and Buy Me a Coffee returns 404 as of 2026-03-12, so only the repo-side funding surface is live today.

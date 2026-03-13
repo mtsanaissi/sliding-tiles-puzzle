@@ -1,0 +1,37 @@
+format: tsv
+fields:
+  - id
+  - status
+  - title
+  - description
+  - depends_on
+  - owner
+  - created_at
+  - updated_at
+  - completed_at
+  - refs
+  - acceptance_criteria
+logFields:
+  - ts
+  - id
+  - action
+  - actor
+  - note
+idPattern: "^T-\\d{3}$"
+statuses:
+  - pending
+  - in_progress
+  - blocked
+  - done
+  - cancelled
+logActions:
+  - create
+  - update
+  - start
+  - block
+  - unblock
+  - complete
+  - cancel
+  - note
+defaultOwner: codex
+

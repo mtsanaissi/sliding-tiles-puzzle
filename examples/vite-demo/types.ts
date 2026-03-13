@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import type { Board } from "../../packages/core/src";
 
 export interface LevelData {
   id: number;
@@ -14,4 +15,4 @@ declare global {
   }
 }
 
-export type GridState = number[]; // Array of 9 numbers representing tile IDs at positions 0-8
+export type GridState = Board;

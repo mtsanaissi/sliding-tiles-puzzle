@@ -1,0 +1,62 @@
+{
+  "name": "@mtsanaissi/sliding-ui-puzzle-react",
+  "version": "0.0.0",
+  "description": "React hook and rendering primitives for turning React content into a sliding puzzle.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "react",
+    "sliding-puzzle",
+    "puzzle",
+    "ui"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mtsanaissi/sliding-tiles-puzzle.git"
+  },
+  "homepage": "https://github.com/mtsanaissi/sliding-tiles-puzzle",
+  "bugs": {
+    "url": "https://github.com/mtsanaissi/sliding-tiles-puzzle/issues"
+  },
+  "sideEffects": false,
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "dependencies": {
+    "@mtsanaissi/sliding-ui-puzzle-core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "jsdom": "^28.1.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "pnpm run build && node --test test/**/*.test.mjs"
+  }
+}

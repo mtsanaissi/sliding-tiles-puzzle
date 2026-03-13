@@ -1,5 +1,0 @@
-{
-  "name": "Sliding Tile UI Puzzle",
-  "description": "A gamified web interface where the UI itself is a sliding tile puzzle. Solve the grid to navigate through the content levels.",
-  "requestFramePermissions": []
-}

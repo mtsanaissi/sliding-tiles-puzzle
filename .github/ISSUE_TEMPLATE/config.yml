@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Support Guide
+    url: https://github.com/mtsanaissi/sliding-tiles-puzzle/blob/main/SUPPORT.md
+    about: Read the project support, sponsorship, and custom integration guidance.
+  - name: Package Documentation
+    url: https://github.com/mtsanaissi/sliding-tiles-puzzle#documentation
+    about: Check the package docs and release notes before filing support requests.

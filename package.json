@@ -1,21 +1,23 @@
 {
-  "name": "sliding-tile-ui-puzzle",
+  "name": "sliding-ui-puzzle-workspace",
   "private": true,
   "version": "0.0.0",
+  "license": "MIT",
   "type": "module",
+  "packageManager": "pnpm@9.0.0",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "react-dom": "^19.2.3",
-    "react": "^19.2.3"
+    "dev": "pnpm --filter @mtsanaissi/sliding-ui-puzzle-demo dev",
+    "dev:demo": "pnpm --filter @mtsanaissi/sliding-ui-puzzle-demo dev",
+    "build": "pnpm -r --if-present build",
+    "preview": "pnpm --filter @mtsanaissi/sliding-ui-puzzle-demo preview",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "lint": "pnpm -r --if-present lint",
+    "test": "pnpm -r --if-present test"
   },
   "devDependencies": {
-    "@types/node": "^22.14.0",
-    "@vitejs/plugin-react": "^5.0.0",
-    "typescript": "~5.8.2",
-    "vite": "^6.2.0"
+    "@types/node": "^25.4.0",
+    "@vitejs/plugin-react": "^5.1.4",
+    "typescript": "~5.9.3",
+    "vite": "^7.3.1"
   }
 }
