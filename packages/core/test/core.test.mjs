@@ -93,10 +93,30 @@ test("scrambleBoard is deterministic with a deterministic random source", () => 
   assert.deepEqual(first, second);
 });
 
+test("scrambleBoard clones the provided startBoard when moves is zero", () => {
+  const startBoard = [0, 1, 2, 3, 4, 8, 6, 7, 5];
+  const board = scrambleBoard({
+    gridSize: 3,
+    moves: 0,
+    startBoard,
+  });
+
+  assert.deepEqual(board, startBoard);
+  assert.notEqual(board, startBoard);
+  assert.deepEqual(startBoard, [0, 1, 2, 3, 4, 8, 6, 7, 5]);
+});
+
 test("serialization helpers round-trip a board", () => {
   const board = [0, 1, 2, 3, 4, 8, 6, 7, 5];
 
   assert.deepEqual(deserializeBoard(serializeBoard(board)), board);
+});
+
+test("getEmptyIndex throws when the board does not contain the empty tile", () => {
+  assert.throws(
+    () => getEmptyIndex([0, 1, 2, 3, 4, 5, 6, 7, 7], 3),
+    /Board does not contain the empty tile/,
+  );
 });
 
 test("createPuzzleState exposes derived metadata for a board", () => {

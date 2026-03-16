@@ -1,6 +1,6 @@
 # Release Engineering
 
-This document defines the release baseline for the first npm publication of the sliding puzzle packages.
+This document defines the release process for the published sliding puzzle packages.
 
 ## Release scope
 
@@ -21,7 +21,7 @@ The MIT license was chosen to maximize reuse of the puzzle engine and React bind
 ## Versioning policy
 
 - Use Semantic Versioning for published releases.
-- Version both packages in lockstep for the initial release phase.
+- Version both packages in lockstep for the current release phase.
 - Keep the workspace root version private and non-published.
 - Update `CHANGELOG.md` in the same pull request as the version change.
 - Tag releases as `v<version>`, for example `v0.1.0`.
@@ -47,7 +47,7 @@ The repository workflow for this is `.github/workflows/ci.yml`.
 
 The repository includes `.github/workflows/publish.yml` for tag-driven publishing.
 
-Publish flow:
+Standard publish flow:
 
 1. Merge release-ready changes.
 2. Update package versions.
@@ -56,34 +56,64 @@ Publish flow:
 5. GitHub Actions verifies the workspace.
 6. GitHub Actions publishes `core` first and `react` second.
 
+The publish workflow currently:
+
+- runs on pushes to tags matching `v*`
+- uses GitHub-hosted runners
+- verifies the workspace with `pnpm build`, `pnpm typecheck`, and `pnpm test`
+- publishes with `pnpm publish` from GitHub Actions
+
+Release commands:
+
+```bash
+git tag v0.1.1
+git push origin v0.1.1
+```
+
 ## Trusted publishing
 
-The workflow is prepared for npm trusted publishing with GitHub Actions OIDC:
+The workflow uses npm trusted publishing with GitHub Actions OIDC:
 
 - the publish job grants `id-token: write`
 - package publication is performed in GitHub Actions rather than from a local machine
 - provenance is requested during publish
 
-Before the first release, the npm package settings still need the GitHub repository added as a trusted publisher for both packages.
+Trusted publisher configuration is set for both packages against:
 
-## Package name availability
+- GitHub owner: `mtsanaissi`
+- repository: `mtsanaissi/sliding-tiles-puzzle`
+- workflow file: `publish.yml`
+- environment: `npm`
 
-Checked on 2026-03-12 against the npm registry:
+This setup should be treated as part of release infrastructure. If the workflow file name, repository, or environment changes, npm trusted publisher settings must be updated before the next tag release.
 
-- `@mtsanaissi/sliding-ui-puzzle-core`: not found at `https://registry.npmjs.org/@mtsanaissi%2Fsliding-ui-puzzle-core`
-- `@mtsanaissi/sliding-ui-puzzle-react`: not found at `https://registry.npmjs.org/@mtsanaissi%2Fsliding-ui-puzzle-react`
+## Package ownership
 
-This indicates the names were available at the time of the check, but availability must be rechecked immediately before the first public publish.
+Published packages:
 
-## First-release checklist
+- `@mtsanaissi/sliding-ui-puzzle-core`
+- `@mtsanaissi/sliding-ui-puzzle-react`
 
-- Confirm package names are still available on npm.
-- Ensure the npm organization or user account is ready to own both packages.
-- Configure npm trusted publishing for this GitHub repository.
+The packages are owned under the npm user scope `@mtsanaissi`. No separate npm organization is required for the current package names.
+
+## First release status
+
+The first public release was completed manually as `0.1.0` in order to create the npm package records, after which trusted publishing was configured for both packages.
+
+Manual first-release notes:
+
+- `core` had to be published before `react`
+- publishing used `pnpm publish`, not `npm publish`, so the workspace dependency from `react` to `core` resolves correctly
+- future releases should use the GitHub tag-driven workflow rather than local manual publishing
+
+## Release checklist
+
 - Verify `LICENSE`, `README.md`, package READMEs, and `CHANGELOG.md` are up to date.
-- Set real package versions in `packages/core/package.json` and `packages/react/package.json`.
-- Run workspace build, typecheck, and tests in CI on the release commit.
-- Push the release tag.
+- Set the next real version in `packages/core/package.json` and `packages/react/package.json`.
+- Run workspace build, typecheck, and tests before tagging.
+- Push the release commit.
+- Create and push the release tag.
+- Confirm the GitHub Actions publish workflow succeeds.
 - Validate both package pages on npm after publish.
 - Smoke-test installation in a fresh consumer project.
 
@@ -92,3 +122,4 @@ This indicates the names were available at the time of the check, but availabili
 - If one package publish fails after the other succeeds, do not republish with the same version.
 - Fix the issue, bump versions, update `CHANGELOG.md`, and publish a new tag.
 - Record release-specific notes in `CHANGELOG.md` rather than only in Git tags or GitHub releases.
+- After any release-infrastructure change, validate the next release with a small patch version before batching larger changes.

@@ -1,6 +1,6 @@
 # Package Product Scope
 
-This document defines the v1 package direction for the sliding puzzle project and acts as the source of truth for packaging decisions.
+This document defines the current v1 package direction for the sliding puzzle project and acts as the source of truth for packaging decisions.
 
 ## v1 Promise
 
@@ -8,7 +8,7 @@ Ship a reusable TypeScript puzzle engine and a React package that can turn React
 
 ## Package Strategy
 
-The repo will publish two packages from the same workspace:
+The repo publishes two packages from the same workspace:
 
 - `@mtsanaissi/sliding-ui-puzzle-core`
 - `@mtsanaissi/sliding-ui-puzzle-react`
@@ -25,7 +25,7 @@ The repo will publish two packages from the same workspace:
 
 ## v1 Non-Goals
 
-The following are explicitly out of scope for the first release:
+The following are explicitly out of scope for the current v1 scope:
 
 - jigsaw or other puzzle families
 - browser extension support
@@ -35,7 +35,7 @@ The following are explicitly out of scope for the first release:
 
 ## Product Boundaries
 
-The first release should optimize for:
+The current release line should optimize for:
 
 - predictable TypeScript APIs
 - a small public surface area
@@ -43,7 +43,7 @@ The first release should optimize for:
 - customizable styling without requiring Tailwind
 - strong correctness and solvability guarantees
 
-The first release should not optimize for:
+The current release line should not optimize for:
 
 - scraping or rendering third-party websites
 - all-framework support beyond the framework-agnostic core
@@ -52,13 +52,11 @@ The first release should not optimize for:
 
 ## Naming Direction
 
-Working names:
+Published names:
 
 - scope: `@mtsanaissi`
 - engine package: `sliding-ui-puzzle-core`
 - React package: `sliding-ui-puzzle-react`
-
-Final npm availability needs to be checked before publishing.
 
 ## Initial Monetization Surfaces
 

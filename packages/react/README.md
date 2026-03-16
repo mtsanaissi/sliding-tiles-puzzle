@@ -2,6 +2,8 @@
 
 React hook and rendering primitives for turning React content into a sliding puzzle inside any container.
 
+This package is published on npm and follows Semantic Versioning for release updates.
+
 ## Install
 
 ```bash

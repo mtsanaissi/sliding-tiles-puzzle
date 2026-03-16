@@ -2,6 +2,8 @@
 
 Framework-agnostic sliding-puzzle logic for board creation, legal moves, solvable scrambling, solved-state checks, and board serialization.
 
+This package is published on npm and follows Semantic Versioning for release updates.
+
 ## Install
 
 ```bash

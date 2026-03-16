@@ -8,6 +8,8 @@ This project is published as a free package workspace. Support and monetization 
 - Release and package context: [README](./README.md)
 - Custom integration intake: [Custom integration request issue form](https://github.com/mtsanaissi/sliding-tiles-puzzle/issues/new?template=integration-request.yml)
 
+Package issues should go to GitHub Issues. Sponsorship, consulting, and integration requests are support paths around the published packages, not package-gated features.
+
 ## Sponsorship and donations
 
 - GitHub Sponsors is the repo-level sponsorship surface configured through `.github/FUNDING.yml`.

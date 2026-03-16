@@ -57,16 +57,20 @@ Run tests:
 pnpm test
 ```
 
-## Package installation
+## Consumer installation
 
-Planned package names:
+Install the published packages from npm:
 
 ```bash
 pnpm add @mtsanaissi/sliding-ui-puzzle-core
 pnpm add @mtsanaissi/sliding-ui-puzzle-react react react-dom
 ```
 
-The workspace currently builds ESM-only packages and targets Node.js `18+`.
+The published packages are ESM-only and target Node.js `18+`.
+
+## Release status
+
+The initial `0.1.0` package release is published on npm. Ongoing releases are published through the tag-driven GitHub Actions workflow documented in [`docs/release-engineering.md`](./docs/release-engineering.md).
 
 ## React example
 
@@ -137,12 +141,12 @@ Source: [`examples/vite-demo/App.tsx`](./examples/vite-demo/App.tsx)
 - The React package does not capture arbitrary webpages or screenshots
 - No built-in menu system, level selector, persistence layer, or jigsaw rendering is included
 - Packages are ESM-only at the moment
-- Final npm package-name availability still needs release-time verification
 
 ## Documentation
 
 - [Core package README](./packages/core/README.md)
 - [React package README](./packages/react/README.md)
+- [Documentation inventory](./docs/documentation-inventory.md)
 - [Package product scope](./docs/package-product-scope.md)
 - [Rendering and styling notes](./docs/rendering-and-styling.md)
 - [Build and packaging notes](./docs/build-and-packaging.md)
@@ -160,4 +164,4 @@ Source: [`examples/vite-demo/App.tsx`](./examples/vite-demo/App.tsx)
 
 ## Status
 
-This repo is preparing a first package release. Support and monetization surfaces are live and linked directly from the docs and demo.
+This repo now ships published npm packages and keeps support and monetization surfaces separate from the package feature set.

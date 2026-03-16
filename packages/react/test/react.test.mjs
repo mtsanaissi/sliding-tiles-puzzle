@@ -11,6 +11,8 @@ import {
   useSlidingPuzzle,
 } from "../dist/index.js";
 
+const nearlySolvedBoard = [0, 1, 2, 3, 4, 5, 6, 8, 7];
+
 const setupDom = () => {
   const dom = new JSDOM("<!doctype html><html><body></body></html>", {
     url: "http://localhost/",
@@ -87,7 +89,7 @@ test("SlidingPuzzleBoard forwards tile clicks with board index and tile id", asy
   const clicks = [];
   const rendered = await renderIntoDom(
     React.createElement(SlidingPuzzleBoard, {
-      board: [0, 1, 2, 3, 4, 5, 6, 8, 7],
+      board: nearlySolvedBoard,
       gridSize: 3,
       content: React.createElement("div", null, "Board"),
       onTileClick: (index, tileId) => {
@@ -152,6 +154,168 @@ test("useSlidingPuzzle updates board state after a mounted interaction", async (
   await rendered.cleanup();
 });
 
+test("useSlidingPuzzle calls onMove for legal moves and ignores illegal ones", async () => {
+  const moves = [];
+
+  const Harness = () => {
+    const puzzle = useSlidingPuzzle({
+      autoScramble: false,
+      gridSize: 3,
+      onMove: (result) => {
+        moves.push(result);
+      },
+    });
+
+    return React.createElement(
+      "div",
+      null,
+      React.createElement(
+        "button",
+        {
+          type: "button",
+          "data-testid": "illegal-move",
+          onClick: () => {
+            puzzle.moveTile(4);
+          },
+        },
+        "Illegal move",
+      ),
+      React.createElement(
+        "button",
+        {
+          type: "button",
+          "data-testid": "legal-move",
+          onClick: () => {
+            puzzle.moveTile(7);
+          },
+        },
+        "Legal move",
+      ),
+    );
+  };
+
+  const rendered = await renderIntoDom(React.createElement(Harness));
+  const illegalButton = rendered.container.querySelector('[data-testid="illegal-move"]');
+  const legalButton = rendered.container.querySelector('[data-testid="legal-move"]');
+
+  await act(async () => {
+    illegalButton.dispatchEvent(
+      new rendered.dom.window.MouseEvent("click", { bubbles: true }),
+    );
+  });
+
+  assert.equal(moves.length, 0);
+
+  await act(async () => {
+    legalButton.dispatchEvent(
+      new rendered.dom.window.MouseEvent("click", { bubbles: true }),
+    );
+  });
+
+  assert.equal(moves.length, 1);
+  assert.equal(moves[0].moved, true);
+  assert.equal(moves[0].fromIndex, 7);
+  assert.equal(moves[0].toIndex, 8);
+  assert.equal(moves[0].movedTileId, 7);
+
+  await rendered.cleanup();
+});
+
+test("useSlidingPuzzle scramble solve and reset expose the expected lifecycle", async () => {
+  const scrambleBoards = [];
+  const solvedBoards = [];
+
+  const Harness = () => {
+    const puzzle = useSlidingPuzzle({
+      autoScramble: false,
+      gridSize: 3,
+      initialBoard: nearlySolvedBoard,
+      onScramble: (board) => {
+        scrambleBoards.push(board);
+      },
+      onSolve: (board) => {
+        solvedBoards.push(board);
+      },
+    });
+
+    return React.createElement(
+      "div",
+      null,
+      React.createElement("output", { "data-testid": "board" }, puzzle.board.join(",")),
+      React.createElement(
+        "button",
+        {
+          type: "button",
+          "data-testid": "scramble",
+          onClick: () => {
+            puzzle.scramble();
+          },
+        },
+        "Scramble",
+      ),
+      React.createElement(
+        "button",
+        {
+          type: "button",
+          "data-testid": "solve",
+          onClick: () => {
+            puzzle.solve();
+          },
+        },
+        "Solve",
+      ),
+      React.createElement(
+        "button",
+        {
+          type: "button",
+          "data-testid": "reset",
+          onClick: () => {
+            puzzle.reset();
+          },
+        },
+        "Reset",
+      ),
+    );
+  };
+
+  const rendered = await renderIntoDom(React.createElement(Harness));
+  const output = rendered.container.querySelector('[data-testid="board"]');
+  const scrambleButton = rendered.container.querySelector('[data-testid="scramble"]');
+  const solveButton = rendered.container.querySelector('[data-testid="solve"]');
+  const resetButton = rendered.container.querySelector('[data-testid="reset"]');
+
+  assert.equal(output.textContent, nearlySolvedBoard.join(","));
+
+  await act(async () => {
+    scrambleButton.dispatchEvent(
+      new rendered.dom.window.MouseEvent("click", { bubbles: true }),
+    );
+  });
+
+  assert.equal(scrambleBoards.length, 1);
+  assert.notEqual(scrambleBoards[0].join(","), nearlySolvedBoard.join(","));
+  assert.equal(output.textContent, scrambleBoards[0].join(","));
+
+  await act(async () => {
+    solveButton.dispatchEvent(
+      new rendered.dom.window.MouseEvent("click", { bubbles: true }),
+    );
+  });
+
+  assert.deepEqual(solvedBoards.at(-1), [0, 1, 2, 3, 4, 5, 6, 7, 8]);
+  assert.equal(output.textContent, "0,1,2,3,4,5,6,7,8");
+
+  await act(async () => {
+    resetButton.dispatchEvent(
+      new rendered.dom.window.MouseEvent("click", { bubbles: true }),
+    );
+  });
+
+  assert.equal(output.textContent, nearlySolvedBoard.join(","));
+
+  await rendered.cleanup();
+});
+
 test("SlidingPuzzle triggers onSolve when a mounted board reaches the solved state", async () => {
   let solvedBoard = null;
 
@@ -160,7 +324,7 @@ test("SlidingPuzzle triggers onSolve when a mounted board reaches the solved sta
       autoScramble: false,
       content: React.createElement("div", null, "Puzzle"),
       gridSize: 3,
-      initialBoard: [0, 1, 2, 3, 4, 5, 6, 8, 7],
+      initialBoard: nearlySolvedBoard,
       onSolve: (board) => {
         solvedBoard = board;
       },
@@ -182,10 +346,40 @@ test("SlidingPuzzle triggers onSolve when a mounted board reaches the solved sta
   await rendered.cleanup();
 });
 
+test("SlidingPuzzleBoard renders custom overlay and empty tile content", async () => {
+  const rendered = await renderIntoDom(
+    React.createElement(SlidingPuzzleBoard, {
+      board: nearlySolvedBoard,
+      gridSize: 3,
+      content: React.createElement("div", null, "Puzzle"),
+      renderTileOverlay: ({ tileId, boardIndex, isSolved }) =>
+        React.createElement(
+          "span",
+          { "data-testid": `overlay-${tileId}` },
+          `${tileId}:${boardIndex}:${isSolved}`,
+        ),
+      renderEmptyTile: ({ tileId, boardIndex, isEmpty }) =>
+        React.createElement(
+          "span",
+          { "data-testid": "empty-tile" },
+          `${tileId}:${boardIndex}:${isEmpty}`,
+        ),
+    }),
+  );
+
+  const overlay = rendered.container.querySelector('[data-testid="overlay-0"]');
+  const emptyTile = rendered.container.querySelector('[data-testid="empty-tile"]');
+
+  assert.equal(overlay.textContent, "0:0:false");
+  assert.equal(emptyTile.textContent, "8:7:true");
+
+  await rendered.cleanup();
+});
+
 test("SlidingPuzzleBoard applies presentation props to the mounted DOM", async () => {
   const rendered = await renderIntoDom(
     React.createElement(SlidingPuzzleBoard, {
-      board: [0, 1, 2, 3, 4, 5, 6, 8, 7],
+      board: nearlySolvedBoard,
       borderRadius: 24,
       boardStyle: { background: "rgb(10, 20, 30)" },
       content: React.createElement("div", null, "Decorated"),
