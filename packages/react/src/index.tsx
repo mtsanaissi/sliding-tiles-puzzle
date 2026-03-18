@@ -1,5 +1,6 @@
 import React, {
   type CSSProperties,
+  type ReactElement,
   type ReactNode,
   useEffect,
   useMemo,
@@ -57,8 +58,10 @@ export interface SlidingPuzzleTileRenderProps {
 export interface SlidingPuzzleBoardProps {
   board: Board;
   gridSize: GridSize;
-  content: ReactNode;
+  content: ReactElement;
   className?: string;
+  width?: CSSProperties["width"];
+  height?: CSSProperties["height"];
   boardStyle?: CSSProperties;
   tileClassName?: string;
   tileStyle?: CSSProperties;
@@ -90,6 +93,82 @@ export interface SlidingPuzzleBoardProps {
 export interface SlidingPuzzleProps
   extends Omit<SlidingPuzzleBoardProps, "board" | "onTileClick">,
     UseSlidingPuzzleOptions {}
+
+const DEFAULT_NUMBER_BADGE_STYLE: CSSProperties = {
+  position: "absolute",
+  top: 8,
+  right: 8,
+  zIndex: 2,
+  minWidth: 22,
+  height: 22,
+  paddingInline: 6,
+  borderRadius: 9999,
+  background: "rgba(15, 23, 42, 0.82)",
+  boxShadow: "0 1px 2px rgba(15, 23, 42, 0.28)",
+  backdropFilter: "blur(6px)",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  pointerEvents: "none",
+};
+
+const DEFAULT_NUMBER_TEXT_STYLE: CSSProperties = {
+  color: "rgba(248, 250, 252, 0.96)",
+  fontWeight: 800,
+  fontSize: 10,
+  lineHeight: 1,
+};
+
+const CONTENT_ELEMENT_ERROR =
+  "content must be a single React element with a rectangular root. Pass one element such as <div />, <img />, or a single custom component.";
+
+const hasDefinedValue = (value: unknown): value is NonNullable<unknown> =>
+  value !== undefined && value !== null;
+
+const validateContentElement = (
+  content: unknown,
+  ownerName: string,
+): ReactElement => {
+  if (!React.isValidElement(content) || content.type === React.Fragment) {
+    throw new TypeError(`${ownerName} ${CONTENT_ELEMENT_ERROR}`);
+  }
+
+  return content;
+};
+
+const getBoardSizingStyle = ({
+  width,
+  height,
+  aspectRatio,
+  boardStyle,
+}: Pick<
+  SlidingPuzzleBoardProps,
+  "width" | "height" | "aspectRatio" | "boardStyle"
+>): Pick<CSSProperties, "width" | "height" | "aspectRatio"> => {
+  const hasExplicitWidth =
+    hasDefinedValue(width) || hasDefinedValue(boardStyle?.width);
+  const hasExplicitHeight =
+    hasDefinedValue(height) || hasDefinedValue(boardStyle?.height);
+  const hasExplicitAspectRatio =
+    hasDefinedValue(aspectRatio) || hasDefinedValue(boardStyle?.aspectRatio);
+  const resolvedAspectRatio =
+    aspectRatio ??
+    boardStyle?.aspectRatio ??
+    (!hasExplicitHeight && !hasExplicitAspectRatio && hasExplicitWidth
+      ? 1
+      : undefined);
+
+  return {
+    width: width ?? boardStyle?.width ?? "100%",
+    height:
+      height ??
+      boardStyle?.height ??
+      (resolvedAspectRatio === undefined && !hasExplicitWidth
+        ? "100%"
+        : undefined),
+    aspectRatio: resolvedAspectRatio,
+  };
+};
 
 export const useSlidingPuzzle = ({
   gridSize,
@@ -175,6 +254,8 @@ export const SlidingPuzzleBoard = ({
   gridSize,
   content,
   className,
+  width,
+  height,
   boardStyle,
   tileClassName,
   tileStyle,
@@ -200,6 +281,13 @@ export const SlidingPuzzleBoard = ({
 }: SlidingPuzzleBoardProps) => {
   const emptyTileId = getEmptyTileId(gridSize);
   const isSolved = isSolvedBoard(board);
+  const contentElement = validateContentElement(content, "SlidingPuzzleBoard");
+  const boardSizingStyle = getBoardSizingStyle({
+    width,
+    height,
+    aspectRatio,
+    boardStyle,
+  });
   const tileIds = useMemo(
     () => Array.from({ length: getTileCount(gridSize) }, (_, index) => index),
     [gridSize],
@@ -210,10 +298,8 @@ export const SlidingPuzzleBoard = ({
       className={className}
       style={{
         position: "relative",
-        width: "100%",
-        height: "100%",
-        aspectRatio,
         ...boardStyle,
+        ...boardSizingStyle,
       }}
     >
       {tileIds.map((tileId) => {
@@ -305,26 +391,13 @@ export const SlidingPuzzleBoard = ({
               {showNumbers ? (
                 <div
                   style={{
-                    position: "absolute",
-                    top: 8,
-                    right: 8,
-                    zIndex: 2,
-                    width: 20,
-                    height: 20,
-                    borderRadius: 9999,
-                    background: "rgba(0, 0, 0, 0.1)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    pointerEvents: "none",
+                    ...DEFAULT_NUMBER_BADGE_STYLE,
                     ...numberBadgeStyle,
                   }}
                 >
                   <span
                     style={{
-                      color: "rgba(0, 0, 0, 0.55)",
-                      fontWeight: 700,
-                      fontSize: 10,
+                      ...DEFAULT_NUMBER_TEXT_STYLE,
                       ...numberTextStyle,
                     }}
                   >
@@ -342,7 +415,7 @@ export const SlidingPuzzleBoard = ({
                   ...contentStyle,
                 }}
               >
-                {content}
+                {contentElement}
               </div>
             </div>
           </button>
@@ -360,8 +433,10 @@ export const SlidingPuzzle = ({
   onMove,
   onScramble,
   onSolve,
+  content,
   ...boardProps
 }: SlidingPuzzleProps) => {
+  const contentElement = validateContentElement(content, "SlidingPuzzle");
   const puzzle = useSlidingPuzzle({
     gridSize,
     scrambleMoves,
@@ -376,6 +451,7 @@ export const SlidingPuzzle = ({
     <SlidingPuzzleBoard
       {...boardProps}
       board={puzzle.board}
+      content={contentElement}
       gridSize={gridSize}
       onTileClick={(index) => {
         puzzle.moveTile(index);

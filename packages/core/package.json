@@ -1,6 +1,6 @@
 {
   "name": "@mtsanaissi/sliding-ui-puzzle-core",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Framework-agnostic sliding puzzle engine for board state, solvable scrambling, and move logic.",
   "type": "module",
   "main": "./dist/index.js",
