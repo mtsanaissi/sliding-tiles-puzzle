@@ -60,6 +60,7 @@ The publish workflow currently:
 
 - runs on pushes to tags matching `v*`
 - uses GitHub-hosted runners
+- uses Node `24` so npm trusted publishing meets the current npm CLI and OIDC support requirements
 - verifies the workspace with `pnpm build`, `pnpm typecheck`, and `pnpm test`
 - publishes with `pnpm publish` from GitHub Actions
 
