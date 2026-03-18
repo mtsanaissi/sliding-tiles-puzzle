@@ -42,3 +42,11 @@ ts	id	action	actor	note
 2026-03-18T15:20:00Z	T-016	create	codex	Added a follow-up task to expose package-level sizing props on the React puzzle components so common consumer embeds do not require an extra wrapper for sizing.
 2026-03-18T15:20:00Z	T-017	create	codex	Added a follow-up task to introduce a documented square sizing fallback for the React puzzle components when explicit height is omitted.
 2026-03-18T15:20:00Z	T-018	create	codex	Added a follow-up task to tighten the React package content contract to a single React element and document the rectangular-surface requirement more clearly.
+2026-03-18T16:19:13Z	T-015	start	codex	Started implementing the React package follow-up work for default tile number badge contrast and documentation updates.
+2026-03-18T16:19:13Z	T-016	start	codex	Started implementing package-level sizing props for the React puzzle components and validating how they compose with existing board sizing behavior.
+2026-03-18T16:19:13Z	T-017	start	codex	Started implementing the default square fallback for width-driven React board usage alongside the new sizing props.
+2026-03-18T16:19:13Z	T-018	start	codex	Started tightening the React package content contract to a single element with matching runtime validation and docs/demo alignment.
+2026-03-18T16:23:33Z	T-015	complete	codex	Completed the React badge contrast update, documented the override hooks, and validated the darker-content case through the React package tests plus workspace build/typecheck/test.
+2026-03-18T16:23:33Z	T-016	complete	codex	Completed the new React package-level width and height props, documented wrapper-free sizing examples, and validated the behavior through the React package tests plus workspace build/typecheck/test.
+2026-03-18T16:23:33Z	T-017	complete	codex	Completed the width-driven square fallback for the React components and validated explicit height precedence plus the wrapper-free sizing case through tests and workspace verification.
+2026-03-18T16:23:33Z	T-018	complete	codex	Completed the single-element React content contract, added runtime rejection for fragments and loose content, aligned demo/docs examples, and validated the change through workspace build/typecheck/test.

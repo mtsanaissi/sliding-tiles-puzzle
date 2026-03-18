@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 
 import React, { act } from "react";
 import ReactDOMClient from "react-dom/client";
+import ReactDOMServer from "react-dom/server";
 import { JSDOM } from "jsdom";
 
 import {
@@ -396,4 +397,69 @@ test("SlidingPuzzleBoard applies presentation props to the mounted DOM", async (
   assert.equal(numberBadges.length >= 8, true);
 
   await rendered.cleanup();
+});
+
+test("SlidingPuzzle accepts width without a wrapper and falls back to a square board", async () => {
+  const markup = ReactDOMServer.renderToStaticMarkup(
+    React.createElement(SlidingPuzzle, {
+      autoScramble: false,
+      content: React.createElement(
+        "div",
+        {
+          style: {
+            width: "100%",
+            height: "100%",
+            background: "rgb(15, 23, 42)",
+          },
+        },
+        "Puzzle",
+      ),
+      gridSize: 3,
+      showNumbers: true,
+      width: 320,
+    }),
+  );
+
+  assert.match(markup, /width:320px/);
+  assert.match(markup, /aspect-ratio:1/);
+  assert.match(markup, /background:rgba\(15, 23, 42, 0\.82\)/);
+  assert.match(markup, /color:rgba\(248, 250, 252, 0\.96\)/);
+});
+
+test("SlidingPuzzleBoard keeps explicit height instead of forcing the square fallback", async () => {
+  const rendered = await renderIntoDom(
+    React.createElement(SlidingPuzzleBoard, {
+      board: nearlySolvedBoard,
+      content: React.createElement("div", null, "Sized"),
+      gridSize: 3,
+      height: 260,
+      width: 320,
+    }),
+  );
+
+  const board = rendered.container.firstElementChild;
+
+  assert.match(board.getAttribute("style"), /width: 320px/);
+  assert.match(board.getAttribute("style"), /height: 260px/);
+  assert.doesNotMatch(board.getAttribute("style"), /aspect-ratio/);
+
+  await rendered.cleanup();
+});
+
+test("SlidingPuzzleBoard rejects fragment content at runtime", async () => {
+  await assert.rejects(
+    renderIntoDom(
+      React.createElement(SlidingPuzzleBoard, {
+        board: nearlySolvedBoard,
+        content: React.createElement(
+          React.Fragment,
+          null,
+          React.createElement("div", null, "A"),
+          React.createElement("div", null, "B"),
+        ),
+        gridSize: 3,
+      }),
+    ),
+    /single React element with a rectangular root/,
+  );
 });

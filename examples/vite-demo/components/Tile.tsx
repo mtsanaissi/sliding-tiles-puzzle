@@ -1,17 +1,26 @@
-import React, { ReactNode } from 'react';
+import React, { type ReactElement } from "react";
 
 interface TileProps {
   id: number; // The visual ID of the tile content
   index: number; // The current grid position
   onClick: (index: number) => void;
   isEmpty: boolean;
-  gridSize: number; 
-  content: ReactNode; // The FULL page content
-  theme: string; 
+  gridSize: number;
+  content: ReactElement; // The FULL page content
+  theme: string;
   showNumbers: boolean;
 }
 
-export const Tile: React.FC<TileProps> = ({ id, index, onClick, isEmpty, gridSize, content, theme, showNumbers }) => {
+export const Tile: React.FC<TileProps> = ({
+  id,
+  index,
+  onClick,
+  isEmpty,
+  gridSize,
+  content,
+  theme,
+  showNumbers,
+}) => {
   // 1. Where is this tile currently positioned on the screen? (GRID POSITION)
   const currentCol = index % gridSize;
   const currentRow = Math.floor(index / gridSize);
@@ -33,7 +42,7 @@ export const Tile: React.FC<TileProps> = ({ id, index, onClick, isEmpty, gridSiz
           height: `${tileHeightPercent}%`,
           left: `${currentCol * tileWidthPercent}%`,
           top: `${currentRow * tileHeightPercent}%`,
-          padding: '2px', 
+          padding: "2px",
           zIndex: 0,
         }}
       >
@@ -51,7 +60,7 @@ export const Tile: React.FC<TileProps> = ({ id, index, onClick, isEmpty, gridSiz
         height: `${tileHeightPercent}%`,
         left: `${currentCol * tileWidthPercent}%`,
         top: `${currentRow * tileHeightPercent}%`,
-        padding: '1px', // The gap between tiles
+        padding: "1px", // The gap between tiles
       }}
     >
       {/* 

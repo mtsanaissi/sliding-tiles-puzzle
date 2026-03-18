@@ -79,30 +79,29 @@ import { SlidingPuzzle } from "@mtsanaissi/sliding-ui-puzzle-react";
 
 export function MarketingPuzzle() {
   return (
-    <div style={{ width: 420, height: 420 }}>
-      <SlidingPuzzle
-        gridSize={4}
-        content={
-          <div
-            style={{
-              width: "100%",
-              height: "100%",
-              display: "grid",
-              placeItems: "center",
-              background: "linear-gradient(135deg, #fde68a, #93c5fd)",
-              fontSize: 48,
-              fontWeight: 800,
-            }}
-          >
-            Launch Day
-          </div>
-        }
-        showNumbers
-        onSolve={() => {
-          console.log("Solved");
-        }}
-      />
-    </div>
+    <SlidingPuzzle
+      gridSize={4}
+      width={420}
+      content={
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            display: "grid",
+            placeItems: "center",
+            background: "linear-gradient(135deg, #fde68a, #93c5fd)",
+            fontSize: 48,
+            fontWeight: 800,
+          }}
+        >
+          Launch Day
+        </div>
+      }
+      showNumbers
+      onSolve={() => {
+        console.log("Solved");
+      }}
+    />
   );
 }
 ```
@@ -118,11 +117,13 @@ For hook-driven composition, see [`packages/react/README.md`](./packages/react/R
 
 ## Styling and accessibility
 
-- Consumer apps own the container size. The board fills the parent by default.
+- Consumer apps can size the board through a parent container or with package-level `width` and `height` props.
+- Passing `width` without `height` gives the React package a square fallback for common embed cases.
 - Tile slicing is percentage-based, so the same content works across supported grid sizes.
+- React content must be passed as one rectangular element rather than loose nodes or fragments.
 - Interactive tiles render as native `button` elements.
 - Touch interaction uses `touch-action: manipulation` by default.
-- Styling is customizable with class names, inline style props, tile overlay hooks, and empty-tile render hooks.
+- Styling is customizable with class names, inline style props, tile overlay hooks, empty-tile render hooks, and number badge overrides.
 - Keyboard interaction is not yet implemented as a first-class v1 feature; consumers should treat current semantics as a base for future accessibility work.
 
 ## Demo examples

@@ -22,9 +22,13 @@ This keeps v1 small while still giving consumers an escape hatch for custom UI.
 
 ## Content Model
 
-Puzzle content is provided as React content through the `content` prop.
+Puzzle content is provided through the `content` prop as a single `ReactElement`.
 
-The package does not attempt DOM capture or arbitrary webpage capture in v1.
+- supported examples: one `div`, `img`, `picture`, or custom component element
+- unsupported examples: strings, arrays, multiple sibling nodes, and `React.Fragment`
+- runtime behavior: the package throws when unsupported content shapes are passed
+
+The package assumes that one element represents the rectangular puzzle surface. It does not attempt DOM capture or arbitrary webpage capture in v1.
 
 ## Callbacks
 
@@ -38,13 +42,24 @@ The hook and convenience component support:
 
 The board supports:
 
+- `width`
+- `height`
 - `gap`
 - `borderRadius`
 - `animationDuration`
+- `aspectRatio`
 - `showNumbers`
+- `numberBadgeStyle`
+- `numberTextStyle`
 - `emptyTilePlaceholder`
 - `renderTileOverlay`
 - class and style props for board and tiles
+
+Sizing behavior:
+
+- without explicit size props, the board fills its parent container
+- `width` without `height` falls back to a square board
+- explicit `height` or `aspectRatio` takes precedence over that fallback
 
 ## Explicit Non-Goals
 

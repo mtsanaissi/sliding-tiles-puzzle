@@ -1,10 +1,10 @@
-import { ReactNode } from "react";
+import type { ReactElement } from "react";
 import type { Board } from "../../packages/core/src";
 
 export interface LevelData {
   id: number;
   name: string;
-  content: ReactNode; // The single full-page content component
+  content: ReactElement; // The single full-page content component
   theme: string; // Background class for the whole page
 }
 

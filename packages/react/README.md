@@ -34,28 +34,27 @@ import { SlidingPuzzle } from "@mtsanaissi/sliding-ui-puzzle-react";
 
 export function SimplePuzzle() {
   return (
-    <div style={{ width: 360, height: 360 }}>
-      <SlidingPuzzle
-        gridSize={3}
-        content={
-          <div
-            style={{
-              width: "100%",
-              height: "100%",
-              display: "grid",
-              placeItems: "center",
-              background: "linear-gradient(135deg, #0f172a, #1d4ed8)",
-              color: "white",
-              fontSize: 40,
-              fontWeight: 800,
-            }}
-          >
-            PLAY
-          </div>
-        }
-        showNumbers
-      />
-    </div>
+    <SlidingPuzzle
+      gridSize={3}
+      width={360}
+      content={
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            display: "grid",
+            placeItems: "center",
+            background: "linear-gradient(135deg, #0f172a, #1d4ed8)",
+            color: "white",
+            fontSize: 40,
+            fontWeight: 800,
+          }}
+        >
+          PLAY
+        </div>
+      }
+      showNumbers
+    />
   );
 }
 ```
@@ -77,16 +76,15 @@ export function CustomPuzzle() {
 
   return (
     <section>
-      <div style={{ width: 420, height: 420 }}>
-        <SlidingPuzzleBoard
-          board={puzzle.board}
-          content={<img alt="Poster" src="/poster.jpg" style={{ width: "100%", height: "100%", objectFit: "cover" }} />}
-          gridSize={4}
-          onTileClick={(index) => {
-            puzzle.moveTile(index);
-          }}
-        />
-      </div>
+      <SlidingPuzzleBoard
+        board={puzzle.board}
+        content={<img alt="Poster" src="/poster.jpg" style={{ width: "100%", height: "100%", objectFit: "cover" }} />}
+        gridSize={4}
+        onTileClick={(index) => {
+          puzzle.moveTile(index);
+        }}
+        width={420}
+      />
 
       <button onClick={() => puzzle.scramble()}>Scramble</button>
       <button onClick={() => puzzle.solve()}>Solve</button>
@@ -126,11 +124,11 @@ Required props:
 
 - `board`
 - `gridSize`
-- `content`
+- `content`: a single React element that acts as the rectangular puzzle surface
 
 Key customization props:
 
-- layout: `gap`, `borderRadius`, `aspectRatio`, `animationDuration`
+- layout: `width`, `height`, `gap`, `borderRadius`, `aspectRatio`, `animationDuration`
 - styling: `className`, `boardStyle`, `tileClassName`, `tileStyle`, `tileFrameClassName`, `tileFrameStyle`, `contentClassName`, `contentStyle`, `emptyTileClassName`, `emptyTileStyle`
 - tile UI: `showNumbers`, `numberBadgeStyle`, `numberTextStyle`
 - behavior: `disabled`, `onTileClick`
@@ -139,8 +137,10 @@ Key customization props:
 
 Behavior notes:
 
-- the board fills the width and height of its parent container
+- the board still fills its parent container by default
+- passing `width` without `height` uses a square fallback, which covers the common embed case without an extra wrapper
 - content is sliced by percentage positioning rather than image processing
+- `content` must be one rectangular React element; fragments, strings, arrays, and multiple sibling nodes are not supported
 - interactive tiles render as `button` elements
 - the empty tile is rendered separately and is never clickable
 
@@ -165,11 +165,19 @@ Drop down to `useSlidingPuzzle` plus `SlidingPuzzleBoard` when you need custom H
 
 ## Styling guidance
 
-- Give the parent container an explicit size; the board itself is size-agnostic.
-- Use `aspectRatio={1}` when you want a square board regardless of parent height.
+- Either size the parent container or pass `width` and `height` directly to the package component.
+- Use `width={360}` without `height` when you want the package to fall back to a square board.
+- Use `aspectRatio={1}` when you want a square board that still follows a parent-driven width.
 - Use `renderTileOverlay` for badges, gradients, or tile-level chrome without mutating the source content.
+- Default tile numbers now use a darker badge and lighter text so they stay readable over darker content. Override with `numberBadgeStyle` and `numberTextStyle` when your design needs a different treatment.
 - Use class names when integrating with a design system and inline style props for one-off customization.
 - Tailwind is not required by the package.
+
+## Content contract
+
+- Pass one React element that renders the full puzzle surface, such as a single `div`, `img`, `picture`, or custom component.
+- Do not pass strings, arrays, multiple siblings, or `React.Fragment`; the package throws at runtime for those unsupported shapes.
+- The package does not attempt DOM capture or layout normalization for arbitrary content trees.
 
 ## Accessibility guidance
 

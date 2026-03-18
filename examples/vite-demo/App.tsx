@@ -166,7 +166,7 @@ const ImagePuzzleExample = () => {
           </p>
           <h2 className="mt-3 text-4xl font-black tracking-tight">Image Puzzle</h2>
           <p className="mt-4 text-sm leading-6 text-slate-300">
-            The board consumes a plain React image node. This is the simpler
+            The board consumes one plain React image element. This is the simpler
             package use case for posters, illustrations, product shots, or
             marketing art.
           </p>
@@ -277,7 +277,8 @@ const CustomControlsExample = () => {
           </h2>
           <p className="mt-4 text-sm leading-6 text-slate-600">
             The board component stays visual. Moves, progress, reset logic, and
-            any surrounding UI can be composed with the hook.
+            any surrounding UI can be composed with the hook around one puzzle
+            surface element.
           </p>
 
           <div className="mt-8 grid gap-3">
