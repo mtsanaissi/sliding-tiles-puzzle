@@ -4,8 +4,6 @@ All notable changes to this workspace will be documented in this file.
 
 The project follows Keep a Changelog conventions and uses Semantic Versioning for published package releases.
 
-## [Unreleased]
-
 ## [0.2.0] - 2026-03-18
 
 ### Changed
