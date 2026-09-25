@@ -12,8 +12,8 @@ pnpm add @mtsanaissi/sliding-ui-puzzle-core
 
 Requirements:
 
-- Node.js `18+`
-- ESM-compatible runtime or bundler
+- Node.js `22+`
+- ESM-compatible runtime or bundler. The package is ESM-only and its export map has no `require` condition, so CommonJS `require()` is unsupported and throws `ERR_PACKAGE_PATH_NOT_EXPORTED`.
 
 ## Best fit
 

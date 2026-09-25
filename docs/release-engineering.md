@@ -43,6 +43,8 @@ GitHub Actions CI must run on pushes and pull requests and cover:
 
 The repository workflow for this is `.github/workflows/ci.yml`.
 
+CI runs a Node `22` and `24` matrix so the published `engines.node` floor of `>=22` is actually exercised. The workspace pins `pnpm@12.6.0` through the root `packageManager` field, and both workflows pass that same version to `pnpm/action-setup`. Local development uses the Node `24` pinned in `.nvmrc`. The root `devEngines.runtime` enforces the same `>=22` floor as the packages, so the Node 22 CI leg and local Node 24 both satisfy it while unsupported runtimes fail `pnpm install`.
+
 ## Publish workflow
 
 The repository includes `.github/workflows/publish.yml` for tag-driven publishing.

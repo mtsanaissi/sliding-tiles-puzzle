@@ -4,7 +4,14 @@
   "version": "0.0.0",
   "license": "MIT",
   "type": "module",
-  "packageManager": "pnpm@9.0.0",
+  "packageManager": "pnpm@12.6.0",
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">=22.0.0",
+      "onFail": "error"
+    }
+  },
   "scripts": {
     "dev": "pnpm --filter @mtsanaissi/sliding-ui-puzzle-demo dev",
     "dev:demo": "pnpm --filter @mtsanaissi/sliding-ui-puzzle-demo dev",
@@ -15,7 +22,7 @@
     "test": "pnpm -r --if-present test"
   },
   "devDependencies": {
-    "@types/node": "^25.4.0",
+    "@types/node": "^24.0.0",
     "@vitejs/plugin-react": "^5.1.4",
     "typescript": "~5.9.3",
     "vite": "^7.3.1"

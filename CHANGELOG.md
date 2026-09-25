@@ -4,6 +4,18 @@ All notable changes to this workspace will be documented in this file.
 
 The project follows Keep a Changelog conventions and uses Semantic Versioning for published package releases.
 
+## [0.3.0] - 2026-09-24
+
+### Changed
+
+- Both packages: raise the supported Node.js floor from `18+` to `22+`. Node 18 and Node 20 are end-of-life, and the ESM-only export map cannot be consumed with `require()` before Node 20.19, so the previous claim was both stale and untestable under the workspace toolchain.
+- Workspace: move the pinned toolchain from pnpm 9 to pnpm 12 and run CI on a Node 22/24 matrix so the declared floor is exercised.
+- Workspace: align `@types/node` with the supported runtime (`^24`) instead of `^25` so the compiler cannot accept Node 25-only APIs the packages do not support.
+
+### Notes
+
+- Consumers on Node 18 or 20 must upgrade. The packages remain ESM-only and expose an `import` entry only, so CommonJS `require()` is unsupported and resolves with `ERR_PACKAGE_PATH_NOT_EXPORTED`.
+
 ## [0.2.1] - 2026-03-18
 
 ### Changed

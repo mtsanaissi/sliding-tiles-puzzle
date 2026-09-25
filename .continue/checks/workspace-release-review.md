@@ -18,7 +18,8 @@ Ignore generic style feedback unless it causes a real bug, maintenance risk, or 
 - Published packages are `@mtsanaissi/sliding-ui-puzzle-core` in `packages/core` and `@mtsanaissi/sliding-ui-puzzle-react` in `packages/react`.
 - `examples/vite-demo` is a local demo app for manual QA and docs examples. It is not published.
 - The workspace uses the built-in Node test runner. `packages/react` tests use `jsdom`.
-- Packages are ESM-only and target Node.js `18+`.
+- Packages are ESM-only and target Node.js `22+` (`engines.node` is `>=22`). CommonJS `require()` is unsupported: the export map has no `require`/`default` condition, so it throws `ERR_PACKAGE_PATH_NOT_EXPORTED`.
+- Toolchain is pinned to `pnpm@12.6.0`; CI runs a Node `22`/`24` matrix and the local/`publish.yml` runtime is Node `24`.
 
 ## Review For
 

@@ -14,8 +14,8 @@ Requirements:
 
 - React `19`
 - React DOM `19`
-- Node.js `18+`
-- ESM-compatible bundler/runtime
+- Node.js `22+`
+- ESM-compatible bundler/runtime. The package is ESM-only and its export map has no `require` condition, so CommonJS `require()` is unsupported and throws `ERR_PACKAGE_PATH_NOT_EXPORTED`.
 
 ## Package shape
 

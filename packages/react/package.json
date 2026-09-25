@@ -1,6 +1,6 @@
 {
   "name": "@mtsanaissi/sliding-ui-puzzle-react",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "React hook and rendering primitives for turning React content into a sliding puzzle.",
   "type": "module",
   "main": "./dist/index.js",
@@ -21,7 +21,7 @@
     "access": "public"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "keywords": [
     "react",

@@ -2,3 +2,8 @@ packages:
   - "packages/*"
   - "examples/*"
 
+# pnpm 12 blocks dependency build scripts by default (strictDepBuilds).
+# esbuild is pulled in through Vite and needs its postinstall to stay allowed.
+allowBuilds:
+  esbuild: true
+

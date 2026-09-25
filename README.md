@@ -30,8 +30,8 @@ The repo also includes a Vite demo app that exercises the supported v1 use cases
 
 Prerequisites:
 
-- Node.js `18+`
-- `pnpm`
+- Node.js `22+` (CI and local development use Node `24`, pinned in `.nvmrc`)
+- `pnpm` `12` (pinned via the root `packageManager` field)
 
 Install workspace dependencies:
 
@@ -66,7 +66,7 @@ pnpm add @mtsanaissi/sliding-ui-puzzle-core
 pnpm add @mtsanaissi/sliding-ui-puzzle-react react react-dom
 ```
 
-The published packages are ESM-only and target Node.js `18+`.
+The published packages are ESM-only and target Node.js `22+`. The export map exposes an `import` entry only, so CommonJS `require()` is unsupported and throws `ERR_PACKAGE_PATH_NOT_EXPORTED`. Use `import` or an ESM-compatible bundler.
 
 ## Release status
 
